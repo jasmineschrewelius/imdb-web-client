@@ -1,6 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react';
 import MovieTable from './components/MovieTable/MovieTable';
+import MovieForm from './components/MovieForm/MovieForm';
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -11,9 +12,12 @@ function App() {
     .then((movies) => setMovies(movies));
   }, []);
 
+
   return (
     <div className="App">
-      <h1>IMDb</h1>
+      <h1 className="text-3xl text-center mb-5">IMDb</h1>
+
+      <MovieForm />
 
       <MovieTable movies={movies} />
      
