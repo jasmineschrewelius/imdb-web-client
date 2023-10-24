@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MovieForm.css';
 
-const MovieForm = () => {
+const MovieForm = ({ onAdd }) => {
 
     const [form, setForm] = useState({ // set first state object
         title: "",
@@ -10,8 +10,28 @@ const MovieForm = () => {
         director: "",
         releaseYear: 0
     });
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const movie = { ...form};
+
+        onAdd(movie);
+    };
+
+    const handleChange = (event) => {
+
+        const {name, value} = event.target;
+
+        setForm({
+            ...form,
+            [name]: value,
+        });
+
+    };
+
   return (
-    <form className="mb-10 grid gap-4">
+    <form onSubmit={handleSubmit} className="mb-10 grid gap-4">
         <div>
         <label htmlFor="title" className="block mb-2">
             Titel
@@ -20,7 +40,10 @@ const MovieForm = () => {
             type="title" 
             id="title" 
             className="border border-zinc-950"
-            value={form.title}/>
+            name="title"
+            value={form.title}
+            onChange={handleChange} 
+            />
         </div>
 
         <div>
@@ -29,8 +52,10 @@ const MovieForm = () => {
         </label>
         <textarea 
             id="plot" 
+            name="plot"
             className="border border-zinc-950"
-            value={form.plot}>
+            value={form.plot}
+            onChange={handleChange} >
         </textarea>
         </div>
 
@@ -38,7 +63,7 @@ const MovieForm = () => {
         <label htmlFor="genre" className="block mb-2">
             Genre
         </label>
-        <select id="genre" value={form.genre} >
+        <select id="genre" value={form.genre} name="genre" onChange={handleChange} >
             <option value="sci-fi">Sci-Fi</option>
             <option value="horror">Skräck</option>
             <option value="comedy">Komedi</option>
@@ -58,8 +83,11 @@ const MovieForm = () => {
         <input 
             type="text" 
             id="director" 
+            name="director"
             className="border border-zinc-950"
-            value={form.director} />
+            value={form.director}
+            onChange={handleChange}  
+            />
         </div>
 
         <div>
@@ -69,8 +97,11 @@ const MovieForm = () => {
         <input 
             type="number" 
             id="releaseYear" 
+            name="releaseYear"
             className="border border-zinc-950"
-            value={form.releaseYear}/>
+            value={form.releaseYear}
+            onChange={handleChange} 
+            />
         </div>
 
         <button className="btn btn-blue">Lägg till</button>
