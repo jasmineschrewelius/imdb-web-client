@@ -12,10 +12,10 @@ function App() {
     .then((movies) => setMovies(movies));
   }, []);
 
-  const addMovie = (movie) => { // add movie to database
+  const addMovie = (movie) => { // add movie to web api
 
-    fetch("https://localhost:8000/movie", {
-            method: "post",
+    fetch("https://localhost:8000/movie", {  
+            method: "post",                  
             headers: {
                 "Content-Type": "application/json"
             },
@@ -23,8 +23,20 @@ function App() {
         })
         .then(resp => resp.json())
         .then((movie) => {
-          setMovies([ ...movies, movie]);
+          setMovies([ ...movies, movie]); // take the old state and replace it with the new one (movie)
         });
+  };
+
+  const handleOnDelete = (movieId) => {  // delete the movie based on id user choose, to web api
+    
+    fetch(`https://localhost:8000/movie/${movieId}`, {
+        method: "delete",
+    })
+    .then((resp) => {
+      const newMovies = movies.filter(x => x.id !== movieId); // create a new array with all the movies that does not includ the id chosen by user
+
+      setMovies(newMovies); // set the new state of the collection movies
+    });
   };
 
 
@@ -34,7 +46,7 @@ function App() {
 
       <MovieForm onAdd={addMovie}/>
 
-      <MovieTable movies={movies} />
+      <MovieTable movies={movies} onDelete={handleOnDelete}/>
      
     </div>
   );

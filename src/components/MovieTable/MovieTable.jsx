@@ -1,7 +1,7 @@
 import React from 'react';
 import './MovieTable.css';
 
-const MovieTable = ({ movies }) => {
+const MovieTable = ({ movies, onDelete }) => {
     return (
     <table>
         <thead>
@@ -10,6 +10,7 @@ const MovieTable = ({ movies }) => {
             <th>År</th>
             <th>Genre</th>
             <th>Regissör</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -19,6 +20,9 @@ const MovieTable = ({ movies }) => {
                     <td>{movie.releaseYear}</td>
                     <td>{movie.genre}</td>
                     <td>{movie.director}</td>
+                    <td>
+                        <button onClick={e => onDelete(movie.id)}>Radera</button>
+                    </td>
                 </tr>
             ))}
         </tbody>
